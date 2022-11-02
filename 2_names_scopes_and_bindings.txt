@@ -1,0 +1,61 @@
+## The Notion of Time Binding
+    Binding:
+        A binding is an association between two things,
+        such as a name and the thing it names.
+    Binding time:
+        Binding time is the time at which a binding is created
+        or, more generally,
+        the time at which any implementation decision is made.
+
+        1. Language design time
+        2. Language implementation time
+        3. Program writing time
+        4. Compile time
+        5. Link time
+        6. Load time
+        7. Run time
+
+## Object Lifetime and Storage Management
+
+    # Object Lifetime:
+        The period of time between the creation and destruction of a name-to-object binding is called the binding’s lifetime.
+
+        key events:
+            * The creation of objects
+            * The creation of bindings
+            * References to variables, subroutines, types, and so on, all of which use bindings
+            * The deactivation and reactivation of bindings that may be temporarily unusable
+            * The destruction of bindings
+            * The destruction of objects
+
+    # Storage Management:
+        Object lifetimes generally correspond to one of three principal storage allocation mechanisms, used to manage the object’s space:
+            1. Static objects are given an absolute address that is retained throughout the program’s execution.
+
+            2. Stack objects are allocated and deallocated in last-in, first-out order, usually in conjunction with subroutine calls and returns.
+
+            3. Heap objects may be allocated and deallocated at arbitrary times. They require a more general (and expensive) storage management algorithm.
+
+        A. Static Allocation:
+            * 'Global variables' are the obvious example of static objects.
+            * The 'instructions' that constitute a program’s 'machine-language translation' can also be thought of as statically allocated objects.
+            * The space of variables that are local to a single subroutine but retain their values from one invocation to the next; is statically allocated.
+            * 'Numeric and string-valued constant literals' are also statically allocated (A = B/14.7 or printf("hello, world\n").
+                note: Small constants are often stored within the instruction itself; larger ones are assigned a separate location.
+
+            Statically allocated objects whose value should not change during program execution are often allocated in protected, read-only memory.
+                (instructions, constants, and certain run-time tables)
+            Thus, any inadvertent attempt to write to them will cause a processor interrupt.
+            This allows the operating system to announce a run-time error.
+
+        B. Stack-Based Allocation
+            * If a language permits recursion, the number of instances of a variable that may need to exist at the same time time is conceptually unbounded.
+            * Here, static allocation of local variables is no longer an option.
+            * In this case, stack based allocation is used.
+            * The natural nesting of sub-routine calls makes it easy to allocate space for locals on a stack.
+            * Each instance of a subroutine at run time has its own frame (also called an activation record) on the stack.
+            * It contains arguments and return values, local variables, temporaries, and bookkeeping information.
+                - Arguments are at the top of the frame
+                - Remaining information is organized according to the desired implementation
+                    (varies from language to language and compiler to compiler)
+            
