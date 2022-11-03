@@ -49,6 +49,18 @@
             Thus, any inadvertent attempt to write to them will cause a processor interrupt.
             This allows the operating system to announce a run-time error.
 
+            # Static Allocation for Recursive Subroutine:
+                - local variables are created when their subroutine is called and destroyed when it returns.
+                - if subroutines is called repeatedly each invocation will create and destroy a separate instance of each variable.
+                -  a language must perform work at run-time corresponding to these create and destroy operations.
+            
+            # Static Allocation for Non-Recursive Subroutine:
+                - recursion wasn't supported in older systems
+                - hence, there can never be more than one invocation of a subroutine active at any given time
+                - a compiler may choose to use static allocation for local variables
+                - compiler arrange the variables of different invocations to share the same locations
+                - this way it avoids any run-time overhead for creation and destruction
+
         B. Stack-Based Allocation
             * If a language permits recursion, the number of instances of a variable that may need to exist at the same time time is conceptually unbounded.
             * Here, static allocation of local variables is no longer an option.
@@ -57,6 +69,16 @@
             * Each instance of a subroutine at run time has its own frame (also called an activation record) on the stack.
             * It contains arguments and return values, local variables, temporaries, and bookkeeping information.
                 - Arguments are at the top of the frame
+                    (caller can easily find them)
                 - Remaining information is organized according to the desired implementation
                     (varies from language to language and compiler to compiler)
-            
+
+            # Maintenance of Stack:
+                the responsibility of maintaining the stack belongs to:
+                1. Prologue:
+                    code executed at the beginning
+                2. Epilogue:
+                    code executed at the end
+                3. Calling Sequence:
+                    - the code executed by the caller immediately before and after the call
+                    - or the combined operations of caller, the prologue, and the epilogue.
