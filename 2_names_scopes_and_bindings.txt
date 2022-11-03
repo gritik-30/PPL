@@ -66,12 +66,32 @@
             * Here, static allocation of local variables is no longer an option.
             * In this case, stack based allocation is used.
             * The natural nesting of sub-routine calls makes it easy to allocate space for locals on a stack.
-            * Each instance of a subroutine at run time has its own frame (also called an activation record) on the stack.
-            * It contains arguments and return values, local variables, temporaries, and bookkeeping information.
-                - Arguments are at the top of the frame
-                    (caller can easily find them)
-                - Remaining information is organized according to the desired implementation
-                    (varies from language to language and compiler to compiler)
+
+            # Frame:    
+                - Each instance of a subroutine at run time has its own frame (also called an activation record) on the stack.
+                - It contains arguments and return values, local variables, temporaries, and bookkeeping information.
+                    - Arguments are at the top of the frame
+                        (caller can easily find them)
+                    - Remaining information is organized according to the desired implementation
+                        (varies from language to language and compiler to compiler)
+                - location of a stack frame cannot be predicted at compile time
+                - however, compiler can arranges a frame pointer in the calling sequence of prologue
+            
+            # Frame Pointer:
+                - is a register which always point to a known location within the frame of the current subroutine
+                - code can access
+                    a local variable within the current frame,
+                    or an argument near the top of the calling frame
+                    by adding a predetermined offset to the value in the frame pointer
+                - arguments and returns typically have positive offsets from the frame pointer
+                - local variables, temporaries, and bookkeeping information typically have negative offsets
+
+            * note:
+                Even in a language without recursion,
+                    it can be advantageous to use a stack for local variables,
+                    rather than allocating them statically.
+                A stack may require substantially less memory at run time
+                    than would be required for static allocation.
 
             # Maintenance of Stack:
                 the responsibility of maintaining the stack belongs to:
@@ -82,3 +102,4 @@
                 3. Calling Sequence:
                     - the code executed by the caller immediately before and after the call
                     - or the combined operations of caller, the prologue, and the epilogue.
+                    
