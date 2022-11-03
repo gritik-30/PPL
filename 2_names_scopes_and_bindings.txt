@@ -103,3 +103,60 @@
                     - the code executed by the caller immediately before and after the call
                     - or the combined operations of caller, the prologue, and the epilogue.
                     
+        C. Heap Allocation:
+            * A heap is a region of storage in which subblocks can be allocated and deallocated at arbitrary times.
+            * Heaps are required for
+                dynamically allocated pieces of linked data structures
+                dynamically resized objects
+                    (such as fully general character strings, lists, and sets)
+                whose size may change as a result of an assignment statement or other update operation
+
+            # Space Concerns:
+                A. Internal Fragmentation:
+                    - occurs when a storage-management algorithm allocates a block that is larger than required to hold a given object
+                    - the extra space is then unused.
+                B. External Fragmentation:
+                    - occurs when the blocks that have been assigned to active objects
+                      are scattered through the heap in such a way that
+                      the remaining, unused space is composed of multiple blocks:
+                          there may be quite a lot of free space,
+                          but no one piece of it may be large enough to satisfy some future request
+        
+        D. Garbage Management:
+            - when some operation is executed in a program, allocation of heap-based object is triggered
+            - when the program is no longer running, deallocation of space needs to be done
+            - in some languages deallocation is done explicitly (C, C++, Pascal)
+            - may languages  specify that objects are to be deallocated implicitly so that
+                it is no longer possible to reach them from any program variable
+            -  The run-time library for such a language must then provide a garbage collection mechanism
+                to identify and reclaim unreachable objects
+            - Most functional and imperative languages require garbage collection (Modula-3, Java, C#)
+            
+            # Explicit Deallocation (Manual Deallocation):
+                - it can implemented easily and have high execution speed
+                - if the programmer can correctly identify the end of an object’s lifetime,
+                    without too much run-time bookkeeping,
+                    the result is likely to be faster execution.
+
+            # Implicit Deallocation (Automatic Garbage Collection):
+                - manual deallocation errors are among the most common and costly bugs in real-world programs
+                - if an object is deallocated too soon, the program may follow a 'Dangling Reference'
+                - if an object is not deallocated at the end of its lifetime, then the program may 'leak memory'
+                - deallocation errors are notoriously difficult to identify and fix.
+                - to overcome these problems, both language designers and programmers have increasingly come to consider
+                    automatic garbage collection an essential language feature.
+                - although, garbage collection algorithms are complex and have lesser execution speed
+                    they have been improved overtime,  reducing their run-time overhead
+
+            ## DANGLING REFERENCE:
+                A dangling pointer, or dangling reference, is a pointer that contains
+                    the address of a heap-dynamic variable that has been deallocated
+
+                - the location being pointed to may have been reallocated to some new heap-dynamic variable
+                - if the new variable is not the same type as the old one,
+                    type checks of uses of the dangling pointer are invalid
+                - even if the new dynamic variable is the same type,
+                    its new value will have no relationship to the old pointer’s dereferenced value
+
+                - it is possible that the location now is being temporarily used by the storage management system
+                - this might allow a change to the location to cause the storage manager to fail.
