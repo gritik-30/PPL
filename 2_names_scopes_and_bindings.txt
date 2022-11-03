@@ -19,6 +19,7 @@
 
     # Object Lifetime:
         The period of time between the creation and destruction of a name-to-object binding is called the binding’s lifetime.
+        Similarly, the time between the creation and destruction of an object is the object’s lifetime.
 
         key events:
             * The creation of objects
